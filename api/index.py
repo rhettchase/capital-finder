@@ -17,9 +17,26 @@ class handler(BaseHTTPRequestHandler):
                 country_req = requests.get(url)
                 country_req.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
                 data = country_req.json()
-                countries = [country_data["capital"][0] for country_data in data]
-                message = str(countries)
+                capitals = [country_data["capital"][0] for country_data in data]
+                message = str(capitals)
             
+            except requests.exceptions.HTTPError as err:
+                message = f"HTTP Error: {err}"
+            except requests.exceptions.RequestException as err:
+                message = f"Request Exception: {err}"
+            except KeyError:
+                message = "Error in parsing country data"
+        
+        if "capital" in dic:
+            url = f"https://restcountries.com/v3.1/capital/{dic['capital']}"
+            
+            try:
+                capital_req = requests.get(url)
+                capital_req.raise_for_status()
+                data = capital_req.json()
+                countries = [capital_data["name"][0] for capital_data in data]
+                message = str(countries)
+                
             except requests.exceptions.HTTPError as err:
                 message = f"HTTP Error: {err}"
             except requests.exceptions.RequestException as err:
