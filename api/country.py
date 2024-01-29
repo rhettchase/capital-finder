@@ -11,14 +11,21 @@ class handler(BaseHTTPRequestHandler):
         dic = dict(query_string_list)
         
         if "country" in dic:
-            url = "https://restcountries.com/v3.1/name/"
-            country_req = requests.get(url + dic["country"])
-            data = country_req.json()
-            countries = []
-            for country_data in data:
-                country_capital = country_data["name"][0]["capital"][0]
-                countries.append(country_capital)
-            message = str(countries)
+            url = f"https://restcountries.com/v3.1/name/{dic['country']}"
+            
+            try:
+                country_req = requests.get(url)
+                country_req.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+                data = country_req.json()
+                countries = [country_data["capital"][0] for country_data in data]
+                message = str(countries)
+            
+            except requests.exceptions.HTTPError as err:
+                message = f"HTTP Error: {err}"
+            except requests.exceptions.RequestException as err:
+                message = f"Request Exception: {err}"
+            except KeyError:
+                message = "Error in parsing country data"
             
         else:
             message = "Please provide a country name"
