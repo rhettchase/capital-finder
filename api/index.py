@@ -13,11 +13,21 @@ class handler(BaseHTTPRequestHandler):
         message = "Please provide a country or capital name"
         
         if "country" in dic:
-            message = self.get_information(f"https://restcountries.com/v3.1/name/{dic['country']}", "capital")
+            capitals = self.get_information(f"https://restcountries.com/v3.1/name/{dic['country']}", "capital")
+            
+            if capitals:
+                message = f"The capital of {dic['country'].title()} is {', '.join(capitals)}."
+            else:
+                message = f"Unable to find the capital of {dic['country'].title()}."
 
         elif "capital" in dic:
-            message = self.get_information(f"https://restcountries.com/v3.1/capital/{dic['capital']}", "country")
+            countries = self.get_information(f"https://restcountries.com/v3.1/capital/{dic['capital']}", "country")
             
+            if countries:
+                message = f"{dic['capital'].title()} is the capital of {', '.join(countries)}."
+            else:
+                message = f"Unable to find a country with the capital {dic['capital'].title()}."
+                
         self.send_response(200)
         self.send_header('Content-type','text/plain')
         self.end_headers()
