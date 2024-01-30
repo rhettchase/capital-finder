@@ -16,7 +16,9 @@ class handler(BaseHTTPRequestHandler):
             capitals = self.get_information(f"https://restcountries.com/v3.1/name/{dic['country']}", "capital")
             
             if capitals:
-                message = f"The capital of {dic['country'].title()} is {', '.join(capitals)}."
+                capital_name = capitals[0]
+                message = f"The capital of {dic['country'].title()} is {capital_name}."
+                
             else:
                 message = f"Unable to find the capital of {dic['country'].title()}."
 
@@ -24,7 +26,8 @@ class handler(BaseHTTPRequestHandler):
             countries = self.get_information(f"https://restcountries.com/v3.1/capital/{dic['capital']}", "country")
             
             if countries:
-                message = f"{dic['capital'].title()} is the capital of {', '.join(countries)}."
+                country_name = countries[0]
+                message = f"{dic['capital'].title()} is the capital of {country_name}"
             else:
                 message = f"Unable to find a country with the capital {dic['capital'].title()}."
                 
