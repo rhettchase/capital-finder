@@ -27,7 +27,7 @@ class handler(BaseHTTPRequestHandler):
             
             if countries:
                 country_name = countries[0]
-                message = f"{dic['capital'].title()} is the capital of {country_name}"
+                message = f"{dic['capital'].title()} is the capital of {country_name}."
             else:
                 message = f"Unable to find a country with the capital {dic['capital'].title()}."
                 
