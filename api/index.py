@@ -36,7 +36,7 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(message.encode('utf-8'))
         return
-        
+    
     def get_information(self, url, type):
         try:
             response = requests.get(url)
@@ -44,13 +44,13 @@ class handler(BaseHTTPRequestHandler):
             data = response.json()
 
             if type == "capital":
-                return str([country_data["capital"][0] for country_data in data])
+                return [country_data["capital"][0] for country_data in data if "capital" in country_data]
             elif type == "country":
-                return str([country_data["name"]["common"] for country_data in data])
+                return [country_data["name"]["common"] for country_data in data]
 
         except requests.exceptions.HTTPError as err:
-            return f"HTTP Error: {err}"
+            return []
         except requests.exceptions.RequestException as err:
-            return f"Request Exception: {err}"
+            return []
         except KeyError:
             return "Error in parsing data"
