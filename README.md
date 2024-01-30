@@ -38,9 +38,10 @@ Alternatively:
 
 - Run `vercel dev` in command line, and add with capital_name or country_name filled in the query: `api?capital={capital_name}` or `api?country={country_name}`
 
-OR use below paths to query
-- `https://capital-finder-rhett-chase.vercel.app/api?capital={capital_name}`
-- `https://capital-finder-rhett-chase.vercel.app/api?country={country_name}`
+OR use below paths to query (click for examples)
+
+- [`https://capital-finder-rhett-chase.vercel.app/api?capital={capital_name}`](https://capital-finder-rhett-chase.vercel.app/api?capital=washington,%20D.C.)
+- [`https://capital-finder-rhett-chase.vercel.app/api?country={country_name}`](https://capital-finder-rhett-chase.vercel.app/api?country=chile)
 
 #### How to use your library (where applicable)
 
